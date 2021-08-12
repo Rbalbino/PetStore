@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
 
 
 // 3 - Classe
@@ -35,11 +36,15 @@ public class Pet {
                 .contentType("application/json") // comum em API REST - antigas era "text/xml"
                 .log().all()
                 .body(jsonBody)
-                .when()  // Quando
+        .when()  // Quando
                 .post(uri)
-                .then()  // Então
+        .then()  // Então
                 .log().all()
                 .statusCode(200)
+                .body("name", is("Rony"))
+                .body("status", is("available"))
+
+
         ;
 
 
