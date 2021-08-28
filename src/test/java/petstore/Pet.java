@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.*;
 
 // 3 - Classe
 public class Pet {
@@ -110,6 +110,22 @@ public class Pet {
 
         ;
     }
+    @Test
+    public void consultarPetPorStatus(){
+        String status = "available";
 
+        given()    // Dado que
+                .contentType("application/json")
+                .log().all()
+                .when()
+                .get(uri + "/findByStatus?status=" + status)
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("name[]", everyItem(equalTo("Rony")))
+        ;
+
+
+    }
 
 }
